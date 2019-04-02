@@ -1,5 +1,7 @@
 package pa03;
 
+import java.util.Arrays;
+
 public class pa03 {
 	static int[] random_1000 = new int[1000];
 	static int[] random_10000 = new int[10000];
@@ -19,21 +21,66 @@ public class pa03 {
          
         
 		////////버블 정렬
-		//bubble_time();
+		bubble_time();
 	    ////////선택 정렬
-		//selection_time();
+		selection_time();
 		////////삽입 정렬
-		//insert_time();
+		insert_time();
 		////////합병 정렬
-        //merge_time();
+        merge_time();
         ////////뮉 정렬(중간값)
-		//quickMid_time();
+		quickMid_time();
 		////////퀵 정렬(랜덤값)
-        //quickRan_time();
+        quickRan_time();
         ////////퀵 정렬(마지막값)
-		//quickFin_time();
+	    quickFin_time();
+		////////힙  정렬
+       heapSort_time();
+        ////////자바 라이브러리 정렬
+       librarySort_time();
+        
+		
+		
+
+
+
         
 	}
+	
+	    
+	static void heapSort(int[] arr) {
+		int len = arr.length;
+		for(int k= len /2; k>0;k--) {
+			downHeap(arr,k,len);
+		}
+	        do {
+	        	int temp = arr[0];
+	        	arr[0] = arr[len-1];
+	        	arr[len-1] = temp;
+	        	len = len -1;
+	        	downHeap(arr,1,len);
+	        	
+	        }while(len>1);
+	    
+	    }
+	
+	static void downHeap(int arr[], int k , int len) {
+		int j, temp = arr[k-1];
+		while(k <= len/2) {
+			j = 2*k;
+			if((j<len) && (arr[j-1] <arr[j])) j++;
+			if(temp>=arr[j-1]) break;
+			
+			arr[k-1] = arr[j-1];
+			k=j;
+			
+		}
+		arr[k-1] =temp;
+	}
+	    
+
+
+	
 	static void init() {
 		random(random_1000);
 		random(random_10000);
@@ -461,7 +508,131 @@ public class pa03 {
 		}
 		System.out.println();
 	}
-    static void swap(int arr[],int a, int b) {
+    static void heapSort_time() {
+    	System.out.print("heapSort");
+		for(int i=0; i<6;i++) {
+			System.out.print("       "+ (i+1)+".");
+			long st1 =0;
+			long et1 =0;
+			long sum=0;
+			if(i==0) {
+				for(int j=0;j<10;j++) {
+					st1 = System.currentTimeMillis();
+					heapSort(random_1000);
+					 et1 = System.currentTimeMillis();
+					long term = et1-st1;
+					sum +=(term)/1000;
+					random(random_1000);
+				}
+				System.out.print((double)(sum/10)+"  ");
+					
+			}else if(i==1) {
+				st1 = System.currentTimeMillis();
+				heapSort(reverse_1000);
+			}
+			else if(i==2) {
+				for(int j=0;j<10;j++) {
+					st1 = System.currentTimeMillis();
+					heapSort(random_10000);
+				    et1 = System.currentTimeMillis();
+					long term = et1-st1;
+					sum += (term/1000);
+					random(random_10000);
+				}
+				System.out.print(((double)sum/10)+"  ");
+			}else if(i==3) {
+				st1 = System.currentTimeMillis();
+				heapSort(reverse_10000);
+			}else if(i==4) {
+				for(int j=0;j<10;j++) {
+					st1 = System.currentTimeMillis();
+					heapSort(random_100000);
+				    et1 = System.currentTimeMillis();
+					long term = et1-st1;
+					sum += (term/1000);
+					random(random_100000);
+				}
+				System.out.print(((double)sum/10)+"  ");
+			}else if(i==5) {
+				st1 = System.currentTimeMillis();
+				heapSort(reverse_100000);
+			}
+			
+			if(i==1 || i==3 || i ==5) {
+		     et1 = System.currentTimeMillis();
+			long term = et1-st1;
+			System.out.print(((double)term/1000)+"  ");
+			}
+			
+			
+		}
+		System.out.println();
+    }
+    static void librarySort_time() {
+    	System.out.print("librarySort");
+		for(int i=0; i<6;i++) {
+			System.out.print("       "+ (i+1)+".");
+			long st1 =0;
+			long et1 =0;
+			long sum=0;
+			if(i==0) {
+				for(int j=0;j<10;j++) {
+					st1 = System.currentTimeMillis();
+					Arrays.sort(random_1000);
+					 et1 = System.currentTimeMillis();
+					long term = et1-st1;
+					sum +=(term)/1000;
+					random(random_1000);
+				}
+				System.out.print((double)(sum/10)+"  ");
+					
+			}else if(i==1) {
+				st1 = System.currentTimeMillis();
+				Arrays.sort(reverse_1000);
+			}
+			else if(i==2) {
+				for(int j=0;j<10;j++) {
+					st1 = System.currentTimeMillis();
+					Arrays.sort(random_10000);
+				    et1 = System.currentTimeMillis();
+					long term = et1-st1;
+					sum += (term/1000);
+					random(random_10000);
+				}
+				System.out.print(((double)sum/10)+"  ");
+			}else if(i==3) {
+				st1 = System.currentTimeMillis();
+				Arrays.sort(reverse_10000);
+			}else if(i==4) {
+				for(int j=0;j<10;j++) {
+					st1 = System.currentTimeMillis();
+					Arrays.sort(random_100000);
+				    et1 = System.currentTimeMillis();
+					long term = et1-st1;
+					sum += (term/1000);
+					random(random_100000);
+				}
+				System.out.print(((double)sum/10)+"  ");
+			}else if(i==5) {
+				st1 = System.currentTimeMillis();
+				Arrays.sort(reverse_100000);
+			}
+			
+			if(i==1 || i==3 || i ==5) {
+		     et1 = System.currentTimeMillis();
+			long term = et1-st1;
+			System.out.print(((double)term/1000)+"  ");
+			}
+			
+			
+		}
+		System.out.println();
+    }
+	
+	
+	
+	
+	static void swap(int arr[],int a, int b) {
 		int tmp = arr[a];
 		arr[a] = arr[b];
 		arr[b] = tmp;
